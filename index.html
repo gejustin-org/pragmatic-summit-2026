@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pragmatic Summit 2026 — Complete Book Report</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-alt: #1c2333;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --heading: #f0f6fc;
+    --accent: #58a6ff;
+    --green: #7ee787;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+    --pink: #f778ba;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 17px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero ─────────────────────────────── */
+  .hero {
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    background: linear-gradient(180deg, #161b22 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-label {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: .75rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    color: var(--heading);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: .75rem;
+  }
+  .hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: .5rem;
+  }
+  .hero .date {
+    font-size: .95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+  .hero .tagline {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--green);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* ── Layout ───────────────────────────── */
+  .layout {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ── Sidebar / TOC ────────────────────── */
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.25rem;
+    border-right: 1px solid var(--border);
+    font-size: .82rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .sidebar h3 {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .7rem;
+    margin-bottom: 1rem;
+  }
+  .sidebar a {
+    display: block;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 5px 0;
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+    transition: all .15s;
+  }
+  .sidebar a:hover, .sidebar a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .sidebar .sep {
+    border-top: 1px solid var(--border);
+    margin: .75rem 0;
+  }
+
+  /* ── Main content ─────────────────────── */
+  .content {
+    flex: 1;
+    min-width: 0;
+    padding: 3rem 3rem 6rem;
+    max-width: 900px;
+  }
+
+  /* ── Talk cards ────────────────────────── */
+  .talk {
+    margin-bottom: 4rem;
+    scroll-margin-top: 2rem;
+  }
+  .talk-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .talk-number {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: .5rem;
+  }
+  .talk-title {
+    font-size: 1.65rem;
+    color: var(--heading);
+    font-weight: 700;
+    margin-bottom: .5rem;
+    line-height: 1.3;
+  }
+  .talk-speaker {
+    font-size: .95rem;
+    color: var(--text-muted);
+  }
+  .talk-speaker strong {
+    color: var(--text);
+  }
+
+  /* ── TL;DR callout ────────────────────── */
+  .tldr {
+    background: var(--card);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .tldr-label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--green);
+    margin-bottom: .5rem;
+    font-weight: 700;
+  }
+  .tldr p { font-size: .95rem; }
+
+  /* ── Section headings inside talks ───── */
+  .section-title {
+    font-size: 1.05rem;
+    color: var(--heading);
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .section-title::before {
+    content: '';
+    width: 3px;
+    height: 1em;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* ── Insights list ────────────────────── */
+  .insights {
+    list-style: none;
+    counter-reset: insight;
+  }
+  .insights li {
+    counter-increment: insight;
+    padding: .75rem 0 .75rem 0;
+    border-bottom: 1px solid rgba(48,54,61,.5);
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .insights li::before {
+    content: counter(insight);
+    position: absolute;
+    left: 0;
+    top: .85rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .75rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .insights li strong { color: var(--heading); }
+  .insights li:last-child { border-bottom: none; }
+
+  /* ── Quotes ───────────────────────────── */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding: .75rem 1.25rem;
+    margin: .75rem 0;
+    background: rgba(88,166,255,.04);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  blockquote p { margin-bottom: .25rem; }
+  blockquote cite, blockquote .attr {
+    display: block;
+    font-style: normal;
+    font-size: .8rem;
+    color: var(--text-muted);
+    margin-top: .25rem;
+  }
+
+  .quote-gallery blockquote {
+    border-left-width: 4px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+    font-size: 1.05rem;
+  }
+
+  /* ── Data points ──────────────────────── */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: .75rem;
+    margin: 1rem 0;
+  }
+  .data-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .data-box .stat {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--green);
+    display: block;
+    margin-bottom: .25rem;
+  }
+  .data-box .label {
+    font-size: .75rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  /* ── Connections ──────────────────────── */
+  .connections {
+    background: var(--card-alt);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border: 1px solid var(--border);
+  }
+  .connections .section-title::before { background: var(--purple); }
+  .connections ul {
+    list-style: none;
+    padding: 0;
+  }
+  .connections li {
+    padding: .5rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+    font-size: .9rem;
+  }
+  .connections li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--purple);
+    font-weight: 700;
+  }
+  .connections li strong { color: var(--heading); }
+
+  /* ── Themes section ───────────────────── */
+  .themes-section {
+    scroll-margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
+  .theme-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .theme-card h3 {
+    color: var(--heading);
+    font-size: 1.2rem;
+    margin-bottom: .75rem;
+  }
+  .theme-card .theme-number {
+    color: var(--orange);
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: .25rem;
+  }
+  .theme-card ul {
+    list-style: none;
+    padding: 0;
+    margin: .5rem 0;
+  }
+  .theme-card li {
+    padding: .35rem 0 .35rem 1rem;
+    position: relative;
+    font-size: .9rem;
+  }
+  .theme-card li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+  }
+  .theme-card .implication {
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--border);
+    font-size: .9rem;
+    color: var(--text-muted);
+  }
+  .theme-card .implication strong { color: var(--green); }
+
+  /* ── Meta-narrative ───────────────────── */
+  .meta-section {
+    scroll-margin-top: 2rem;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
+  .meta-section h2 {
+    font-size: 2rem;
+    color: var(--heading);
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+  }
+  .meta-section p { margin-bottom: 1rem; }
+  .meta-section strong { color: var(--heading); }
+
+  .phase-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+  }
+  .phase-list li {
+    padding: .75rem 0 .75rem 1.5rem;
+    position: relative;
+    border-left: 2px solid var(--border);
+    margin-left: .5rem;
+  }
+  .phase-list li::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 1rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .phase-list li strong { color: var(--heading); }
+
+  .value-list {
+    list-style: none;
+    counter-reset: val;
+    margin: 1.5rem 0;
+  }
+  .value-list li {
+    counter-increment: val;
+    padding: .75rem 0;
+    padding-left: 2rem;
+    position: relative;
+  }
+  .value-list li::before {
+    content: counter(val) ".";
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .value-list li strong { color: var(--heading); }
+
+  /* ── Action items ─────────────────────── */
+  .actions-section {
+    scroll-margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
+  .actions-section h2 {
+    font-size: 1.6rem;
+    color: var(--heading);
+    margin-bottom: 1.5rem;
+  }
+  .action-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .action-num {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--card);
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .action-item p { font-size: .95rem; }
+  .action-item strong { color: var(--heading); }
+
+  /* ── Quote gallery ────────────────────── */
+  .quote-gallery-section {
+    scroll-margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
+  .quote-gallery-section h2 {
+    font-size: 1.6rem;
+    color: var(--heading);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Footer ───────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: .85rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Mobile toggle ────────────────────── */
+  .toc-toggle {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  }
+
+  /* ── Responsive ───────────────────────── */
+  @media (max-width: 900px) {
+    .sidebar {
+      position: fixed;
+      left: -300px;
+      top: 0;
+      z-index: 99;
+      background: var(--bg);
+      transition: left .25s;
+      border-right: 1px solid var(--border);
+    }
+    .sidebar.open { left: 0; }
+    .toc-toggle { display: flex; align-items: center; justify-content: center; }
+    .content { padding: 2rem 1.25rem 4rem; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 4rem 1.5rem 3rem; }
+  }
+
+  @media (max-width: 500px) {
+    html { font-size: 15px; }
+    .data-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-label">February 11, 2026 · San Francisco</div>
+  <h1>The Pragmatic Summit 2026</h1>
+  <p class="subtitle">Complete Book Report — 13 Talks Analyzed</p>
+  <p class="tagline">"The era of code generation is ending. The era of code orchestration is beginning."</p>
+</header>
+
+<!-- Mobile TOC toggle -->
+<button class="toc-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle table of contents">☰</button>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<nav class="sidebar" id="toc">
+  <h3>Talks</h3>
+  <a href="#talk-1">1 · OpenAI — Reshaping Software</a>
+  <a href="#talk-2">2 · Lessons from Cursor</a>
+  <a href="#talk-3">3 · Vercel v0 &amp; d0 Agent</a>
+  <a href="#talk-4">4 · World-Class Teams (GitHub/Atlassian)</a>
+  <a href="#talk-5">5 · Uber — Agentic Shift</a>
+  <a href="#talk-6">6 · Ramp — New AI Products</a>
+  <a href="#talk-7">7 · Nicole Forsgren — High-Performing Teams</a>
+  <a href="#talk-8">8 · Fowler &amp; Beck — Reinventing Software</a>
+  <a href="#talk-9">9 · Simon Willison — Coding Agent Practices</a>
+  <a href="#talk-10">10 · Chip Huyen — Nothing Left to Build</a>
+  <a href="#talk-11">11 · Product-Minded Engineers</a>
+  <a href="#talk-12">12 · Entire.io &amp; Closing</a>
+  <div class="sep"></div>
+  <h3>Analysis</h3>
+  <a href="#themes">Cross-Talk Themes</a>
+  <a href="#meta">The Meta-Narrative</a>
+  <a href="#actions">Action Items</a>
+  <a href="#quotes">Best Quotes</a>
+</nav>
+
+<!-- Main Content -->
+<main class="content">
+
+<!-- ═══════════════════════════════════════ TALK 1 ═══ -->
+<article class="talk" id="talk-1">
+  <div class="talk-header">
+    <div class="talk-number">Talk 01</div>
+    <h2 class="talk-title">How AI is Reshaping the Craft of Building Software</h2>
+    <p class="talk-speaker"><strong>Vijaye Raji</strong> (CTO of Applications, OpenAI) &amp; <strong>Tibo Sottiaux</strong> (Head of Engineering, Codex) · Fireside chat with Gergely Orosz</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>OpenAI's internal engineering has shifted from using Codex as a tool to treating it as a <em>teammate</em>. The Codex team reinvents its workflow weekly, chasing shifting bottlenecks — first code generation, then code review, now user understanding and strategy synthesis. Their engineers routinely consume hundreds of billions of tokens per week, running parallel agents from reserved dev boxes while attending meetings.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>The bottleneck keeps moving.</strong> Code generation → code review → CI/CD → understanding user needs. Every time you solve one, the next stage becomes the constraint.</li>
+    <li><strong>Codex is responsible for its own QA.</strong> They run Codex overnight in a self-testing loop that performs autonomous QA, flags regressions, and generates PDF reports.</li>
+    <li><strong>Designers ship more code than engineers did 6 months ago.</strong> Designer-authored code is merge-ready. Role collapse is happening at the frontier.</li>
+    <li><strong>"Compute envelope per employee" is the new negotiation.</strong> A candidate asked how much compute they'd get — the new version of "what's the equipment budget?"</li>
+    <li><strong>Explore multiple implementations in parallel, pick the winner.</strong> Spike approaches simultaneously, converge on whichever proves best. This kills the design doc bottleneck.</li>
+    <li><strong>The PM as 10x program manager.</strong> The sole PM for all of Codex uses it to auto-file tickets, assign work, and follow up — becoming a "50x program manager."</li>
+    <li><strong>New grads are AI-native and crushing it.</strong> ~100 new grad hires this summer. The "juniors are dead" narrative is wrong.</li>
+    <li><strong>Foundations never go out of fashion.</strong> Architectural thinking, product intuition, and ability to move up and down the stack remain durable skills.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"Some of the engineers routinely hit hundreds of billions of tokens every week."</p><span class="attr">— Vijaye Raji</span></blockquote>
+  <blockquote><p>"Every time I think I'm more capable than Codex, I figure out I'm wrong and I just didn't prompt it right."</p><span class="attr">— Unnamed OpenAI researcher, per Tibo</span></blockquote>
+  <blockquote><p>"Our designers are shipping more code than engineers were shipping six months ago."</p><span class="attr">— Tibo Sottiaux</span></blockquote>
+  <blockquote><p>"I don't think I've ever seen anything like this... the speed at which this is happening, some of these charts don't make sense."</p><span class="attr">— Vijaye Raji</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">~100</span><span class="label">New grad hires at OpenAI this summer</span></div>
+    <div class="data-box"><span class="stat">33</span><span class="label">Direct reports for Tibo (flat structure)</span></div>
+    <div class="data-box"><span class="stat">100B+</span><span class="label">Tokens consumed per engineer per week</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>Bottleneck migration is directly relevant.</strong> As you enable faster code generation, proactively invest in code review automation, CI acceleration, and deployment pipelines.</li>
+      <li><strong>The PM-as-program-manager pattern</strong> could inform how context engineering work is structured — one person + agents doing the work of a small team.</li>
+      <li><strong>"Compute envelope per employee"</strong> is a framing to bring to leadership. Frame AI spending as a talent perk, not a cost.</li>
+      <li><strong>Parallel implementation exploration</strong> could reshape how migration strategies are approached — spike multiple approaches with agents, converge on what works.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 2 ═══ -->
+<article class="talk" id="talk-2">
+  <div class="talk-header">
+    <div class="talk-number">Talk 02</div>
+    <h2 class="talk-title">Lessons from Building Cursor</h2>
+    <p class="talk-speaker"><strong>Sualeh Asif</strong> (Co-founder, Cursor) · Fireside chat with Gergely Orosz</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Cursor's co-founder reveals that coding "got solved in six months" (March–December 2025) and the best engineers no longer write code by hand. The real frontier is cloud agents that can <em>test their own code</em>, self-driving codebases where you allocate a compute budget, and RL-trained models that learn to self-summarize for infinite context. Engineers will increasingly become managers of agent fleets.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>"Coding got solved in six months."</strong> From March to December 2025, hand-coding went from default to obsolete for the best engineers. Engineering didn't get solved, but the specific act of writing code did.</li>
+    <li><strong>Cloud agents are at 1% of their potential.</strong> To reach 90%, usage must grow 1000x. The fundamental change needed: models that test their own code.</li>
+    <li><strong>DevX is the cloud agent bottleneck.</strong> Models need to use your app like a human would, but corporate DevX is held together by tribal knowledge. The model never complains about bad DevX — it silently degrades.</li>
+    <li><strong>Self-driving codebases are coming.</strong> Allocate $100K/day to your codebase. 7% on security, 12% on tech debt, 25% on bug finding, 50% on backlog. The codebase manages itself.</li>
+    <li><strong>RL-trained self-summarization solves context limits.</strong> RL forces the model to produce summaries actually useful to its future self — lossy, but like human memory.</li>
+    <li><strong>Composer 1.5 is between Sonnet 4.5 and Opus 4.5</strong> — trained almost entirely through RL. Custom models matter.</li>
+    <li><strong>The browser experiment revealed genuine surprise.</strong> The model built a functional browser from scratch over 3 days with ~4000 commits — something Sualeh himself couldn't do.</li>
+    <li><strong>Review every line for long-lived code. Don't bother for weekend projects.</strong></li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"Coding got solved in six months… that doesn't mean engineering is done and there's no engineers anymore. But the best engineers I know are not writing code by hand anymore."</p><span class="attr">— Sualeh Asif</span></blockquote>
+  <blockquote><p>"You press enter, come back, and you see a thousand line diff and you have no clue whether it's mergeable. It should be the model's responsibility to figure out if it's correct."</p><span class="attr">— Sualeh Asif</span></blockquote>
+  <blockquote><p>"I can't do this. If you gave me Composer 1.5 and let me rip for a month on an island, I probably couldn't make a browser."</p><span class="attr">— Sualeh Asif</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">1%</span><span class="label">Current compute on cloud agents (target: 90%)</span></div>
+    <div class="data-box"><span class="stat">~4,000</span><span class="label">Commits to build a browser in 3 days</span></div>
+    <div class="data-box"><span class="stat">$100M+</span><span class="label">CPU compute/year for RL infrastructure</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>"The model never yells at you when DevX is off"</strong> — think about <em>model-facing DevX</em> alongside human-facing DevX. Are your repos and docs navigable by agents?</li>
+      <li><strong>Self-driving codebase concept</strong> maps to migration automation — allocate persistent compute to continuously upgrade/maintain the codebase.</li>
+      <li><strong>RL-trained self-summarization</strong> is relevant to context engineering — the best context isn't hand-crafted, it's learned through optimization.</li>
+      <li><strong>Cloud agent testing</strong> aligns with AI quality validation. The next step is generating <em>verified</em> code.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 3 ═══ -->
+<article class="talk" id="talk-3">
+  <div class="talk-header">
+    <div class="talk-number">Talk 03</div>
+    <h2 class="talk-title">Lessons from Building Vercel v0 and the d0 Agent</h2>
+    <p class="talk-speaker"><strong>Malte Ubl</strong> (CTO, Vercel) · Fireside chat</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Vercel's CTO rebuilt their internal data agent by <em>deleting everything</em> and replacing a complex tool-calling architecture with just two tools: bash and SQL — 50 lines of code. Make problems look like coding tasks because that's what models are trained on. He also argues for "optimistic locking" organizational models, predicts software is "a free puppy" (free to create, expensive to maintain), and caps Vercel at 1,024 employees.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>Delete everything and start simpler.</strong> d0 went from complex tool-calling to 50 lines with bash + SQL. YAML descriptions of business semantics proved more powerful than tool orchestration.</li>
+    <li><strong>"In the world of agents, you have to be humble."</strong> Best practices from summer 2025 are already outdated.</li>
+    <li><strong>Optimistic locking for organizations.</strong> No approvals. Ship anything but announce intent. The org can veto. This inverts the traditional approval bottleneck.</li>
+    <li><strong>Software is a free puppy.</strong> Free to create, expensive to maintain. The exciting frontier is agents in software <em>maintenance</em>.</li>
+    <li><strong>The software market elasticity question.</strong> Cheaper creation → more software (YouTube analogy), not fewer engineers.</li>
+    <li><strong>Senior ICs benefit most, then juniors.</strong> Seniors already operated like managers of work. The squeeze is in the middle.</li>
+    <li><strong>One person should prove the product before getting a team.</strong> "Teams just make things go slower."</li>
+    <li><strong>1,024 employees as an asymptote.</strong> Revenue grows, headcount doesn't.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"We deleted everything and switched to an agent that looks very similar to a coding agent… just two tools: bash and SQL. 50 lines of code. Completely transformational for the business."</p><span class="attr">— Malte Ubl</span></blockquote>
+  <blockquote><p>"Software is free. Like getting a free puppy. It has to be maintained."</p><span class="attr">— Malte Ubl</span></blockquote>
+  <blockquote><p>"If I were to start v0 today… why would you have a team? Teams just make things go slower."</p><span class="attr">— Malte Ubl</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">50</span><span class="label">Lines of code for d0 agent</span></div>
+    <div class="data-box"><span class="stat">2</span><span class="label">Tools: bash + SQL</span></div>
+    <div class="data-box"><span class="stat">87%</span><span class="label">Support intake automated</span></div>
+    <div class="data-box"><span class="stat">1,024</span><span class="label">Employee count cap</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>"Make it look like a coding task"</strong> — present migration specs as code-like artifacts, not abstract instructions.</li>
+      <li><strong>Deleting complexity</strong> — consider whether bash + your domain-specific tool could replace complex agent pipelines.</li>
+      <li><strong>Free puppy maintenance</strong> is the migration automation opportunity. More AI-created software = exploding maintenance burden.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 4 ═══ -->
+<article class="talk" id="talk-4">
+  <div class="talk-header">
+    <div class="talk-number">Talk 04</div>
+    <h2 class="talk-title">Building World-Class Engineering Teams in the Age of AI</h2>
+    <p class="talk-speaker"><strong>Thomas Dohmke</strong> (ex-GitHub CEO, CEO of Entire) &amp; <strong>Rajeev Rajan</strong> (CTO, Atlassian) · Fireside chat with Gergely Orosz</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Atlassian's RoboDev is used by <em>all</em> engineers — PRs per engineer are up 89%, issue cycle time is down 42%. Both speakers emphasize that the most AI-native developers force themselves to <em>not look at the code</em>, the middle of the career ladder is getting squeezed, and coding is finally fun again.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>"AI native" developers force themselves not to look at code.</strong> The discipline is to express intent through prompts and reasoning, not inspection.</li>
+    <li><strong>Role collapse is accelerating.</strong> PM → Product Engineer, Designer → Design Engineer. PMs at Atlassian using Replit produce better specs.</li>
+    <li><strong>Context is the "magic word."</strong> Atlassian's RoboDev beats Claude Code using Anthropic's own model because of the "teamwork graph."</li>
+    <li><strong>The Homer Simpson's Car problem.</strong> When agents implement every idea, without taste and product management you get Homer's car.</li>
+    <li><strong>Token costs are the new headcount problem.</strong> Costs are through the roof, creating inversions where you slow down productive developers.</li>
+    <li><strong>Span of control is increasing.</strong> √n direct reports — √400 = 20. Fewer management layers.</li>
+    <li><strong>Agents even the playing field for remote teams.</strong> 24/7 pair programming, brainstorming, and code review partners.</li>
+    <li><strong>Coding is fun again.</strong> "What agents have done is bring us back to the joy of coding."</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"Agents are as smart as the context you give them. In Atlassian we've built the teamwork graph — who does Thomas work with, on which PR, on which issue — and that context helps RoboDev do a much better job."</p><span class="attr">— Rajeev Rajan</span></blockquote>
+  <blockquote><p>"PRs per engineer have gone up 89%. Issue cycle time has gone down 42%. 51% of security vulnerabilities are now caught through agents."</p><span class="attr">— Rajeev Rajan</span></blockquote>
+  <blockquote><p>"Coding is fun again. What agents have done is bring us back to the joy of coding."</p><span class="attr">— Thomas Dohmke</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">+89%</span><span class="label">PRs per engineer at Atlassian</span></div>
+    <div class="data-box"><span class="stat">-42%</span><span class="label">Issue cycle time reduction</span></div>
+    <div class="data-box"><span class="stat">51%</span><span class="label">Security vulns caught by agents</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>"Context is the magic word"</strong> directly validates context engineering as a strategic differentiator.</li>
+      <li><strong>The Homer Simpson's Car problem</strong> — include guardrails for quality/coherence, not just velocity.</li>
+      <li><strong>Token cost visibility</strong> should be built into AI Platform from day one.</li>
+      <li><strong>"Force yourself not to look at code"</strong> — the mindset to evangelize to teams adopting AI tooling.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 5 ═══ -->
+<article class="talk" id="talk-5">
+  <div class="talk-header">
+    <div class="talk-number">Talk 05</div>
+    <h2 class="talk-title">Leading Engineering Through an Agentic Shift</h2>
+    <p class="talk-speaker"><strong>Anshu Chada</strong> (Head of Developer Platform) &amp; <strong>Ty Smith</strong> (Principal Engineer) · Uber</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Uber built Minions (background agents), U-Review (AI code review), AutoCover (test generation), and AutoMigrate with Shephard (campaign management). 70% of agent workloads are toil — migrations, dead code cleanup, upgrades. The shift from pair programming to <em>peer programming</em> yields the biggest gains. The hardest problems aren't technical; they're adoption, measurement, and cost.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>70% of agent workloads are toil.</strong> Migrations, library upgrades, dead code cleanup. Higher accuracy creates a virtuous cycle of trust and adoption.</li>
+    <li><strong>From pair programming to peer programming.</strong> Copilot era: 10-15% bump. Agent era: developers as tech leads directing async agents.</li>
+    <li><strong>Prompt quality matters enough to build a grader.</strong> Minions has a "prompt improver" that analyzes prompts before execution.</li>
+    <li><strong>Code review is the new bottleneck.</strong> Code Inbox (smart routing + risk scoring) and U-Review (AI review with a grading layer) address the flood of AI-generated PRs.</li>
+    <li><strong>AutoCover generates 5,000 tests/month with 3x quality</strong> vs. generic agents — purpose-built with RL-style optimization.</li>
+    <li><strong>AutoMigrate + Shephard is the migration holy grail.</strong> Four phases: identification → transformation → validation → campaign management.</li>
+    <li><strong>Adoption is slow despite magic demos.</strong> Peer-to-peer win-sharing is the most effective tactic.</li>
+    <li><strong>Activity metrics ≠ business outcomes.</strong> The CFO asks "what's the impact on revenue?" This is unsolved.</li>
+    <li><strong>Cost is 6x since 2024.</strong> Right model for the right job, but minimize developer friction in model selection.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"70% of the workloads that developers are pushing into the system were toil tasks."</p><span class="attr">— Anshu Chada</span></blockquote>
+  <blockquote><p>"Engineers trust other engineers as opposed to directors like me."</p><span class="attr">— Anshu Chada</span></blockquote>
+  <blockquote><p>"The cost of AI is too damn high."</p><span class="attr">— Anshu Chada</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">70%</span><span class="label">Agent workloads that are toil</span></div>
+    <div class="data-box"><span class="stat">5,000</span><span class="label">AI-generated tests merged/month</span></div>
+    <div class="data-box"><span class="stat">3×</span><span class="label">Quality improvement vs. generic agents</span></div>
+    <div class="data-box"><span class="stat">6×</span><span class="label">Cost increase since 2024</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>AutoMigrate + Shephard</strong> is the architecture blueprint for migration automation. Four phases: identification → transformation → validation → campaign management.</li>
+      <li><strong>Prompt improver pattern</strong> — invest in prompt quality checking before execution. Failed tasks kill trust.</li>
+      <li><strong>5,000 tests/month</strong> validates dedicated-agent-per-task over generic agents.</li>
+      <li><strong>"Engineers trust engineers, not directors"</strong> — find champions, share wins, let adoption spread peer-to-peer.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 6 ═══ -->
+<article class="talk" id="talk-6">
+  <div class="talk-header">
+    <div class="talk-number">Talk 06</div>
+    <h2 class="talk-title">Lessons from Building a New AI Product</h2>
+    <p class="talk-speaker"><strong>Nik Koblov</strong> (EVP Eng), <strong>Veeral Patel</strong>, <strong>Will Koh</strong>, <strong>Ian Tracey</strong> (Staff Engineers) · Ramp</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Ramp went from "a thousand agents" to "a single agent with a thousand skills," centered on Omnichat and a shared tool catalog. Their policy agent demonstrates the power of starting simple with real data. Ramp Inspect now accounts for 50%+ of merged PRs. Team A (impact-obsessed, tool-adopting) will diverge sharply from Team B (process-obsessed, headcount-complaining).</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>One agent with a thousand skills > a thousand agents.</strong> Let experimentation bloom, then ruthlessly consolidate.</li>
+    <li><strong>English is the new programming language — for real.</strong> The policy agent works by turning the expense policy doc into the rules. The doc IS the prompt.</li>
+    <li><strong>Start simple, learn from live data, layer complexity.</strong> Each layer added based on observed failures, not predicted needs.</li>
+    <li><strong>Users are wrong.</strong> They assumed user approvals were ground truth. They weren't — users are lazy, don't know the policy, or just approve on Sundays.</li>
+    <li><strong>Build your own eval tools with Claude Code.</strong> They "one-shotted" a custom Streamlit eval tool. Sometimes building > buying.</li>
+    <li><strong>Evals from day one, starting with 5 data points.</strong> Run in CI. "More likely than not, adding more context will have bad consequences — context rot."</li>
+    <li><strong>The autonomy slider.</strong> Let users control the autonomy level. Trust builds over time; let users pull toward more automation.</li>
+    <li><strong>Ramp Inspect: 50%+ of merged PRs.</strong> Multiplayer-first so PMs and designers can pair with engineers.</li>
+    <li><strong>Team A vs. Team B divergence.</strong> AI amplifies the gap. "You can still build the wrong thing just a lot faster."</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"You don't need to build a thousand agents. You want to drive your framework towards a single agent with a thousand skills."</p><span class="attr">— Nik Koblov</span></blockquote>
+  <blockquote><p>"AI products cannot be one-shotted. As long as everyone is aligned that you're not going to have perfection on day one, that was one of the main cultural learnings."</p><span class="attr">— Veeral Patel</span></blockquote>
+  <blockquote><p>"Software is perpetually not finished. Jobs not finished."</p><span class="attr">— Ian Tracey</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">50%+</span><span class="label">Of Ramp PRs from Ramp Inspect</span></div>
+    <div class="data-box"><span class="stat">150K+</span><span class="label">Tests in their suite</span></div>
+    <div class="data-box"><span class="stat">~20</span><span class="label">Tools vibe-coded by one PM</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>"One agent with a thousand skills"</strong> — build a shared agent framework with pluggable migration skills.</li>
+      <li><strong>The autonomy slider</strong> — let teams control how much they trust AI-generated migrations.</li>
+      <li><strong>"Context rot"</strong> — more context ≠ better results. You need evals to know.</li>
+      <li><strong>Team A vs. Team B</strong> — a useful framework for evaluating engineers in the AI era.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 7 ═══ -->
+<article class="talk" id="talk-7">
+  <div class="talk-header">
+    <div class="talk-number">Talk 07</div>
+    <h2 class="talk-title">Leading High-Performing Engineering Teams in the Age of AI</h2>
+    <p class="talk-speaker"><strong>Nicole Forsgren, PhD</strong> — Author of <em>Frictionless</em> &amp; <em>Accelerate</em>, Google · Fireside chat with Gergely Orosz</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>AI supercharged the coding "inner loop," but organizational friction — reviews, deployments, access provisioning — is now the dominant bottleneck. Faster AI feedback loops paradoxically <em>increase</em> cognitive load. Humans max out at 3-4 hours of deep work per day. Build a "personal board of directors" to navigate uncertainty.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>The bottleneck has moved downstream.</strong> AI made coding fast; review, deployment, release, and security processes are on fire.</li>
+    <li><strong>Faster feedback loops ≠ better.</strong> AI feedback is so fast that engineers rebuild mental models "dozens of times in 30 minutes." Mitchell Hashimoto's workaround: turn off all agent notifications.</li>
+    <li><strong>Cognitive load is the real limiter, not tools.</strong> Humans max out at 3-4 hours of deep work per day. "1000x engineer" narratives are bounded by human cognition.</li>
+    <li><strong>Burnout isn't overwork — it's values misalignment.</strong> The fear isn't job loss, it's losing connection to craft.</li>
+    <li><strong>AI genies aren't friends.</strong> Six agents ≠ six teammates. Agents "just agree with us constantly" — worse than honest peer pushback.</li>
+    <li><strong>SPACE framework still works.</strong> Satisfaction, Performance, Activity, Collaboration, Efficiency. Use adoption as a proxy for satisfaction.</li>
+    <li><strong>For agents to self-drive, humans must first understand the system.</strong> Agentic future requires observability — which requires humans who can build it.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"We just threw gas on the fire, and now our systems — whether technology systems or human systems or processes — are really getting overwhelmed."</p><span class="attr">— Nicole Forsgren</span></blockquote>
+  <blockquote><p>"Humans max out at about 3 to 4 hours a day of really hard deep work. Which always makes me laugh when execs say they need 8 hours of intense work."</p><span class="attr">— Nicole Forsgren</span></blockquote>
+  <blockquote><p>"Having a couple of genies is different from having a couple of friends."</p><span class="attr">— Nicole Forsgren</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">3-4 hrs</span><span class="label">Maximum deep work per day</span></div>
+    <div class="data-box"><span class="stat">2 weeks</span><span class="label">New hire's first contribution sat unreviewed</span></div>
+    <div class="data-box"><span class="stat">10%</span><span class="label">Sanctioned AI experimentation time (Atlassian)</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>Context engineering should reduce cognitive load</strong>, not add to it. Migration automation should eliminate mental model rebuilding.</li>
+      <li><strong>Instrumentation before agentic</strong> — invest in migration observability before fully autonomous agents.</li>
+      <li><strong>DORA → SPACE → DevX → Frictionless</strong> — Forsgren's evolution tracks the same trajectory as AI Capabilities Model work.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 8 ═══ -->
+<article class="talk" id="talk-8">
+  <div class="talk-header">
+    <div class="talk-number">Talk 08</div>
+    <h2 class="talk-title">Frameworks for Reinventing Software, Again and Again</h2>
+    <p class="talk-speaker"><strong>Martin Fowler</strong> (ThoughtWorks Chief Scientist) &amp; <strong>Kent Beck</strong> (Creator of XP &amp; TDD) · Fireside chat with Gergely Orosz</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Two legends with 50+ years of combined perspective: nobody has the answers right now, and that's both terrifying and liberating. They warn about "re-soloing" of programming, advocate for pair programming with genies, and argue that craft skills are <em>more</em> relevant with AI — but the emotional satisfaction of craft is changing fundamentally.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>"Nobody knows the answers to anything."</strong> For 25 years, senior engineers could press play on known solutions. That era is over. The new meta-skill is figuring out how to use these tools.</li>
+    <li><strong>AI's magnitude is unprecedented.</strong> Fowler: nothing matches it — not OOP, not the internet, not Agile. Beck: the microprocessor is the closest analogy.</li>
+    <li><strong>The Agile Industrial Complex will repeat with AI.</strong> The pattern of snake oil (SAFe, certifications) is already visible.</li>
+    <li><strong>The "re-soloing" of programming is dangerous.</strong> Engineers say "I have 6 agents" — but that's tools, not human collaborators who disagree with you.</li>
+    <li><strong>"DevX = Agent Experience" is a circle.</strong> Well-modularized code, good tests, clean APIs, clear domain language — all help agents AND humans.</li>
+    <li><strong>Pair programming: 2 humans + N genies, not 1 human + N genies.</strong> The slowness of agents is a <em>feature</em> — while waiting, humans discuss architecture.</li>
+    <li><strong>Kent Beck's emotional honesty about losing craft satisfaction.</strong> "I need to let go of that because it doesn't make a difference anymore." A legendary craftsman mourning the loss of what gave him joy.</li>
+    <li><strong>Domain language is the new craft.</strong> Developing precise language to communicate with agents is the new high-leverage skill — DDD reborn for the AI era.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"At this moment, nobody knows the answers to anything."</p><span class="attr">— Kent Beck</span></blockquote>
+  <blockquote><p>"I can't do that anymore. But I can still develop an overall understanding of what I'm doing. I need to shift my focus to enjoying understanding the domain… it just doesn't have leverage anymore."</p><span class="attr">— Kent Beck</span></blockquote>
+  <blockquote><p>"AI is an amplifier. If you're young and learning quickly, AI is going to amplify that. This is the golden age of the junior programmer."</p><span class="attr">— Kent Beck</span></blockquote>
+  <blockquote><p>"My skepticism has to be absolute and total, which means I have to be skeptical about my skepticism."</p><span class="attr">— Martin Fowler</span></blockquote>
+  <blockquote><p>"If you're a carpenter and they just introduced the circular saw and you think carpentry is over — no, you have more powerful tools."</p><span class="attr">— Kent Beck</span></blockquote>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>"DevX = Agent Experience"</strong> — everything built for developer productivity also makes agents more effective. The ultimate argument for AI Platform investment.</li>
+      <li><strong>Re-soloing warning</strong> — advocate for pair/mob programming WITH agents, not solo + agent workflows.</li>
+      <li><strong>Domain language for migrations</strong> — develop precise terminology (campaign, target, rollback, conformance) that agents can use consistently.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 9 ═══ -->
+<article class="talk" id="talk-9">
+  <div class="talk-header">
+    <div class="talk-number">Talk 09</div>
+    <h2 class="talk-title">Engineering Practices That Make Coding Agents Work</h2>
+    <p class="talk-speaker"><strong>Simon Willison</strong> — Creator of Datasette, co-creator of Django · Fireside chat</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>The most directly practical talk. Willison has fully transitioned to agent-first development — he writes more code on his phone than his laptop. TDD is mandatory (agents make it free), conformance-driven development enables reverse-engineering specs from multiple implementations, and sandboxing is the primary security control. Most provocative: we're approaching "nobody reads the code" — and it might work.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>TDD is now mandatory, not optional.</strong> Tests used to be "extra work." Now they're free. <code>use red green TDD</code> — 5 tokens is the complete instruction.</li>
+    <li><strong>"Nobody writes code, nobody reads code" — and it might work.</strong> If you build verification infrastructure (tests, conformance suites, manual testing). We already trust other teams' code without reading it.</li>
+    <li><strong>Conformance-driven development is a breakthrough.</strong> Build a test suite that passes against 6 existing implementations, then use that reverse-engineered suite to build a new implementation.</li>
+    <li><strong>Code quality is a choice.</strong> Poor AI code is YOUR choice — you chose to accept it. With agents, you can achieve higher quality because refactoring costs just a prompt.</li>
+    <li><strong>Agents follow existing patterns almost perfectly.</strong> The first implementation matters enormously — "exactly the same as with human development teams."</li>
+    <li><strong>Opus 4.6 was the trust threshold.</strong> "Very confident" it won't do anything stupid for problems he's seen it tackle.</li>
+    <li><strong>The exhaustion is real and may save us.</strong> After 2 hours of managing 3 projects, he's done. The biological limit prevents "1000x engineer."</li>
+    <li><strong>Open source demand is collapsing for component-level libraries.</strong> But agents love and depend on open source more than ever.</li>
+    <li><strong>Sandboxing is the only real security answer.</strong> The "lethal trifecta": private data + malicious instructions + exfiltration. Cut off one leg.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"Right now, I write more code on my phone than I do on my laptop."</p><span class="attr">— Simon Willison</span></blockquote>
+  <blockquote><p>"Tests are no longer even remotely optional."</p><span class="attr">— Simon Willison</span></blockquote>
+  <blockquote><p>"Nobody writes any code, nobody reads any code — which is clear insanity. That is wildly irresponsible. [But] it turns out you can do this if you think really hard about how agents prove to you that the stuff they've written works."</p><span class="attr">— Simon Willison</span></blockquote>
+  <blockquote><p>"I end up with code that is way better than the code I would have written by hand because I'm a little bit lazy."</p><span class="attr">— Simon Willison</span></blockquote>
+  <blockquote><p>"After two hours of that, I'm done for the day. Mentally exhausted. I think that might be what saves us."</p><span class="attr">— Simon Willison</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">45-49%</span><span class="label">Speedup on Fibonacci benchmark (backstage optimization)</span></div>
+    <div class="data-box"><span class="stat">5</span><span class="label">Tokens: "use red green TDD"</span></div>
+    <div class="data-box"><span class="stat">~2 hrs</span><span class="label">Before mental exhaustion</span></div>
+    <div class="data-box"><span class="stat">3</span><span class="label">Go projects in 2 weeks (non-fluent)</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>Conformance-driven development for migrations.</strong> Take existing migration implementations → extract a conformance suite → validate new migration types. Try this week.</li>
+      <li><strong>TDD-first agent workflows.</strong> Every migration agent should start with <code>use red green TDD</code>. Highest-ROI instruction.</li>
+      <li><strong>Template/exemplar strategy.</strong> The first migration of each type must be excellent because every subsequent one follows its patterns.</li>
+      <li><strong>Design for 2-4 hour deep work windows.</strong> Async-first, notification-batched, "check when ready" patterns.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 10 ═══ -->
+<article class="talk" id="talk-10">
+  <div class="talk-header">
+    <div class="talk-number">Talk 10</div>
+    <h2 class="talk-title">Building When It Feels Like There's Nothing Left to Build</h2>
+    <p class="talk-speaker"><strong>Chip Huyen</strong> — Author of <em>AI Engineering</em> &amp; <em>Designing Machine Learning Systems</em></p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>The most philosophical talk. Huyen grapples with the existential crisis: anything you create can be replicated by AI within a day. Her answer: build because it brings joy, because problems follow a long-tail distribution AI can't cover, and because human preference is deeply personal. She also delivers sharp observations about AI's inefficient web search and irreversible actions in the physical world.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>"The Ghibli moment of software."</strong> Just as AI made any art style reproducible, AI code generation makes any describable software reproducible.</li>
+    <li><strong>Long-tail problems are the moat.</strong> AI excels at common problems. Edge cases, cultural nuances form a long tail AI can't fully cover.</li>
+    <li><strong>Cultural nuances are vastly underestimated.</strong> Vietnamese voice bots vs. American text chatbots — response timing differs by 120-220ms between cultures.</li>
+    <li><strong>Irreversible actions are the real danger.</strong> Form submissions, financial transactions — these can't be undone.</li>
+    <li><strong>The world isn't agent-ready.</strong> Rate limits, websites, books — all built for humans, need rebuilding for agents.</li>
+    <li><strong>AI web search is embarrassingly inefficient.</strong> Agents visit 900-1,000 URLs per query but only ~20 are unique.</li>
+    <li><strong>"Claude just wiped out my Postgres locally."</strong> Found the port taken, removed the existing instance.</li>
+    <li><strong>Code review as education is broken.</strong> Senior reviews junior's AI code; junior doesn't read feedback: "I'm not the one writing the code."</li>
+    <li><strong>Building as gift-giving.</strong> Custom apps as birthday presents. The purest relationship with AI-era development.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"I fluctuate between excitement and despair. On one hand, I can build anything I want. On the other hand, anyone can build anything I want."</p><span class="attr">— Chip Huyen</span></blockquote>
+  <blockquote><p>"Claude just wiped out my Postgres locally… it was trying to create a new app and was like, 'Wait, this port is taken, let me just remove it.'"</p><span class="attr">— Chip Huyen</span></blockquote>
+  <blockquote><p>"I hope we can normalize building things for fun."</p><span class="attr">— Chip Huyen</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">300K</span><span class="label">Views in one week on her project</span></div>
+    <div class="data-box"><span class="stat">< 1 day</span><span class="label">Someone cloned her project with Claude</span></div>
+    <div class="data-box"><span class="stat">900-1K</span><span class="label">URLs visited per AI search query</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>Long-tail migration problems</strong> — design the system to gracefully hand off edge cases where human expertise remains essential.</li>
+      <li><strong>Irreversible migration actions</strong> — build explicit reversibility checks. If not rollback-able, require human approval.</li>
+      <li><strong>Code review reinvention</strong> — what does migration review look like when neither author nor reviewer wrote the code? Intent review? Conformance checking?</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 11 ═══ -->
+<article class="talk" id="talk-11">
+  <div class="talk-header">
+    <div class="talk-number">Talk 11</div>
+    <h2 class="talk-title">Product-Minded Engineers in an AI-Native World</h2>
+    <p class="talk-speaker"><strong>Michelle</strong> (Co-founder, Flint), <strong>Drew</strong> (Staff PM, Temporal), <strong>Thomas</strong> (CTO, Linear) · Panel</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Linear's "quality as strategy" (one-word strategy, 10x better, Quality Wednesdays fixing 2,500 defects), Stripe's API review process as product education, and designers now shipping 5-6 PRs per week. Taste is a learnable craft, and in an AI world where anyone can ship features, quality becomes the primary differentiator.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>"Quality" as a one-word strategy.</strong> Linear entered a crowded market with a single differentiator: 10x quality for ICs.</li>
+    <li><strong>Taste is a learnable craft.</strong> The ability to simulate user interactions, see a few moves ahead, and selectively forget what you know.</li>
+    <li><strong>Quality Wednesdays.</strong> Every engineer finds one visual/interaction defect and fixes it. 2,500 defects fixed over 2 years.</li>
+    <li><strong>The designer-to-coder pipeline is real.</strong> Flint's designer (ex-Netflix, never coded) now ships 5-6 PRs per week.</li>
+    <li><strong>API review as product education.</strong> "Developer flows" — step-by-step stories of how a developer would use the API.</li>
+    <li><strong>4 Claude Code agents running simultaneously per engineer</strong> at Flint. Small bugs from 8am customer calls fixed by 11am.</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"Our strategy is one word: quality. We wanted to build something not 2x better but 10x better."</p><span class="attr">— Thomas, Linear CTO</span></blockquote>
+  <blockquote><p>"Our designer — head of design at Netflix, 12 years, never coded — is now writing 5-6 PRs per week."</p><span class="attr">— Michelle, Flint</span></blockquote>
+  <blockquote><p>"Give your engineers time to create a high-quality product. Quality is not measurable quickly."</p><span class="attr">— Thomas, Linear CTO</span></blockquote>
+
+  <h3 class="section-title">Data Points</h3>
+  <div class="data-grid">
+    <div class="data-box"><span class="stat">2,500</span><span class="label">Defects fixed via Quality Wednesdays</span></div>
+    <div class="data-box"><span class="stat">5-6</span><span class="label">PRs/week from non-engineer designer</span></div>
+    <div class="data-box"><span class="stat">4</span><span class="label">Simultaneous Claude Code agents/engineer</span></div>
+    <div class="data-box"><span class="stat">3 hrs</span><span class="label">8am bug → 11am fix via agents</span></div>
+  </div>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>Quality as moat</strong> — if everyone can generate migration code, quality of the migration becomes the differentiator.</li>
+      <li><strong>Developer flows</strong> — require story-based documentation of migration tool interactions.</li>
+      <li><strong>Quality Wednesdays for AI output</strong> — regular reviews of agent-generated migration quality.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ TALK 12 ═══ -->
+<article class="talk" id="talk-12">
+  <div class="talk-header">
+    <div class="talk-number">Talk 12</div>
+    <h2 class="talk-title">Entire.io and Closing of The Pragmatic Summit</h2>
+    <p class="talk-speaker"><strong>Thomas Dohmke</strong> (Co-founder, Entire.io / ex-CEO of GitHub) with <strong>Gergely Orosz</strong> closing</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Dohmke launches "Checkpoints" — an open-source CLI capturing developer intent (prompts, reasoning, corrections) alongside code changes. The thesis: in an agentic world, <em>prompt history</em> is more important than <em>code history</em>. GitHub's file-browser paradigm is obsolete for agentic development, and code review of AI-generated code is fundamentally broken.</p>
+  </div>
+
+  <h3 class="section-title">Key Insights</h3>
+  <ol class="insights">
+    <li><strong>Prompt history > code history.</strong> When nobody writes or reads code, the history of <em>intents</em> matters more than file diffs.</li>
+    <li><strong>GitHub's file-browser paradigm is obsolete.</strong> "A glorified file browser." If you never look at code, why are repos organized as folders and files?</li>
+    <li><strong>Institutional knowledge is the real loss.</strong> WHY decisions were made is never codified. With massive AI code churn, this gets exponentially worse.</li>
+    <li><strong>Merge conflicts could be resolved by replaying intent.</strong> Replay the original prompt on the merged codebase instead of resolving at the code level.</li>
+    <li><strong>No technology ever truly goes away.</strong> Cobol still exists. GitHub won't disappear — Entire sits alongside it "like Figma to Adobe."</li>
+  </ol>
+
+  <h3 class="section-title">Notable Quotes</h3>
+  <blockquote><p>"We are no longer thinking in code. We are thinking in human language."</p><span class="attr">— Thomas Dohmke</span></blockquote>
+  <blockquote><p>"When you go to a GitHub repository today, what you're looking at is a glorified file browser."</p><span class="attr">— Thomas Dohmke</span></blockquote>
+  <blockquote><p>"Raise your hand if you are happy about reviewing your co-worker's 10,000 lines of AI slop. The worst dream of every developer."</p><span class="attr">— Thomas Dohmke</span></blockquote>
+
+  <div class="connections">
+    <h3 class="section-title">Connections to Our Work</h3>
+    <ul>
+      <li><strong>Intent capture for migrations</strong> — capture prompts and reasoning behind migration decisions, not just code changes.</li>
+      <li><strong>Replay for conflict resolution</strong> — replay migration intent against updated codebases instead of manual merge conflict resolution.</li>
+      <li><strong>Trust layers for AI contributions</strong> — build verification layers as the "voucher" for agent work.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ═══════════════════════════════════════ THEMES ═══ -->
+<section class="themes-section" id="themes">
+  <h2 style="font-size:2rem;color:var(--heading);font-weight:800;margin-bottom:2rem;">Cross-Talk Themes</h2>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 01</div>
+    <h3>The Bottleneck Keeps Moving</h3>
+    <p>Every single speaker identified that code generation is solved or nearly solved. The constraints have shifted downstream.</p>
+    <ul>
+      <li><strong>OpenAI:</strong> Code gen → code review → CI/CD → understanding users</li>
+      <li><strong>Cursor:</strong> Authoring → testing → verification</li>
+      <li><strong>Uber:</strong> Authoring → review → measurement → cost</li>
+      <li><strong>Forsgren:</strong> Inner loop → review, deployment, release, security (the entire "outer loop")</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Build the downstream infrastructure: automated review, testing, validation, and campaign management.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 02</div>
+    <h3>Simplicity Wins (Again and Again)</h3>
+    <ul>
+      <li>Vercel deleted their complex agent → 50 lines + bash + SQL</li>
+      <li>Ramp started with 5 eval data points and iterated</li>
+      <li>Willison: <code>use red green TDD</code> — 5 tokens</li>
+      <li>Beck: "What's the smallest experiment I can run?"</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Start with the simplest possible agent. Add complexity only when real failures demand it.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 03</div>
+    <h3>Context > Model Quality</h3>
+    <ul>
+      <li>Atlassian: RoboDev beats Claude Code with Claude's own model (teamwork graph)</li>
+      <li>Uber: MCP + docs + Jira = better performance</li>
+      <li>Ramp: Employee role/title > model upgrades</li>
+      <li>Fowler: DDD language makes agents more efficient</li>
+      <li>Willison: Agents follow existing patterns perfectly</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Context engineering is the highest-leverage investment. The model is a commodity; the context is the moat.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 04</div>
+    <h3>Toil is the Killer App</h3>
+    <ul>
+      <li>Uber: 70% of agent workloads are toil</li>
+      <li>Vercel: Software maintenance is the exciting frontier</li>
+      <li>Huyen: Common problems (top of distribution) are AI territory</li>
+      <li>Willison: 3 Go projects in 2 weeks by a non-fluent programmer</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Migration automation is perfectly positioned. Toil has the highest accuracy and builds the most trust.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 05</div>
+    <h3>Adoption is a People Problem</h3>
+    <ul>
+      <li>Uber: 24-minute magic demo → slow adoption; peer-to-peer wins</li>
+      <li>Ramp: Cultural alignment is prerequisite</li>
+      <li>Forsgren: Explicit exec sponsorship makes a "huge difference"</li>
+      <li>Beck: Organizational incentives actively resist improvement</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Invest in internal champions, shared wins, and progressive trust-building. Even if AI is better, incentives may resist it.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 06</div>
+    <h3>Cost is the Elephant in the Room</h3>
+    <ul>
+      <li>Uber: 6x cost increase since 2024</li>
+      <li>Dohmke: Token costs "through the roof"</li>
+      <li>Vercel: One engineer was 10x cost due to cache misses</li>
+      <li>Huyen: AI search visits 900-1000 URLs (~20 unique) — massive waste</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Build cost observability from day one. Own the narrative before finance forces it.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 07</div>
+    <h3>Role Collapse and the Manager Instinct</h3>
+    <ul>
+      <li>OpenAI: Designers ship more code than engineers</li>
+      <li>Cursor: Engineers becoming "managers" of agent fleets</li>
+      <li>Linear/Flint: Non-engineer designers shipping 5-6 PRs/week</li>
+      <li>Beck: "6 tools ≠ 6 teammates" — don't let this become re-soloing</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> The Staff+ role evolves toward orchestrator of automated systems. Maintain human collaboration alongside agent orchestration.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 08</div>
+    <h3>Verification > Generation</h3>
+    <ul>
+      <li>Willison: TDD is mandatory — agents make it free</li>
+      <li>Beck: "When you've got a big powerful genie, you really have to learn how to verify"</li>
+      <li>Forsgren: Some companies REMOVED automated review when AI entered</li>
+      <li>Dohmke: Review AI slop is "the worst dream of every developer"</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Build verification infrastructure. Conformance suites, automated quality gates, intent-based review.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 09</div>
+    <h3>The Human Limit is Real</h3>
+    <ul>
+      <li>Forsgren: 3-4 hours of deep work per day, max</li>
+      <li>Willison: "After 2 hours, I'm done. Mentally exhausted."</li>
+      <li>Beck: Agent slowness is a feature — gives time to talk</li>
+      <li>Hashimoto: Turns off all agent notifications</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Design for 2-4 hour deep work windows. Async-first, notification-batched. The 1000x engineer is biologically impossible.</div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-number">Theme 10</div>
+    <h3>Nobody Reads the Code (And That Might Be OK)</h3>
+    <ul>
+      <li>Willison: "Nobody writes code, nobody reads code" — works with verification</li>
+      <li>Huyen: Juniors don't read senior review feedback on AI code</li>
+      <li>Dohmke: Prompt history > code history — review intent, not implementation</li>
+      <li>Fowler: "What do you mean by code? We're at least doing prompting"</li>
+    </ul>
+    <div class="implication"><strong>Implication:</strong> Evolve from code review to intent review + conformance verification. "Did the agent fulfill the intent and pass all checks?"</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ META ═══ -->
+<section class="meta-section" id="meta">
+  <h2>The Meta-Narrative</h2>
+
+  <p>The Pragmatic Summit 2026 tells a single coherent story: <strong>The era of code generation is ending. The era of code orchestration is beginning.</strong> The headliner talks (Forsgren, Fowler, Beck, Willison, Huyen) deepen this into something more profound: <strong>we are mourning the old craft while inventing the new one, and nobody knows what the new one looks like yet.</strong></p>
+
+  <p>Every speaker has accepted that AI writes code at least as well as most humans. That's no longer controversial — it's boring. What's not boring is everything that follows:</p>
+
+  <ol class="phase-list">
+    <li><strong>Phase 1 (2022-2024): Augmentation.</strong> Copilot, tab completion, 10-15% productivity gains. Pair programming.</li>
+    <li><strong>Phase 2 (2025): Delegation.</strong> Background agents, Cursor/Claude Code, async task execution. Peer programming. Coding "got solved."</li>
+    <li><strong>Phase 3 (2026+): Orchestration.</strong> Self-driving codebases, campaign management, multi-agent fleets, engineers as tech leads of agent teams.</li>
+    <li><strong>Phase 4 (emerging): Intent-Driven Development.</strong> The code becomes ephemeral; the intent is permanent. Documented reasoning, conformance specs, and domain models that agents translate into implementations.</li>
+  </ol>
+
+  <p>The deeper story is about <strong>where value concentrates</strong> in this new world:</p>
+
+  <ol class="value-list">
+    <li><strong>Context</strong> is more valuable than compute. Every winning company wins because of proprietary context, not better models.</li>
+    <li><strong>Taste</strong> is more valuable than speed. Homer's car is the cautionary tale. The ability to say "no, not that" is the scarce resource.</li>
+    <li><strong>Verification</strong> is more valuable than generation. Anyone can generate code. Building the infrastructure to trust it is the hard problem.</li>
+    <li><strong>Adoption</strong> is harder than building. Organizational incentives actively resist improvement. Change management is now the dominant engineering challenge.</li>
+    <li><strong>Craft satisfaction is shifting, not dying.</strong> Beck mourns perfecting one function. But new satisfactions emerge: managing 3 projects simultaneously, building gifts for friends, achieving 10x quality.</li>
+    <li><strong>The human limit bounds everything.</strong> 3-4 hours of deep work. 2 hours of agent management. "1000x engineers" are fantasy. "10x leverage within human bandwidth" is realistic.</li>
+  </ol>
+
+  <p>The summit's implicit message to platform engineers: <strong>You are building the infrastructure for the most important transition in software engineering since the internet — and possibly since the microprocessor.</strong> Kent Beck and Martin Fowler, with 50 years of perspective, confirm: they've never seen change this fast.</p>
+</section>
+
+<!-- ═══════════════════════════════════════ ACTIONS ═══ -->
+<section class="actions-section" id="actions">
+  <h2>Action Items</h2>
+
+  <div class="action-item"><div class="action-num">1</div><p><strong>Frame migration automation as "campaign management."</strong> Uber's Shephard concept (YAML-defined migrations → auto-generated PRs → tracking → notification) is the mature version. Use this as the architecture reference.</p></div>
+
+  <div class="action-item"><div class="action-num">2</div><p><strong>Build model-facing DevX.</strong> Audit whether repos, services, and docs are navigable by agents. A new dimension of platform engineering.</p></div>
+
+  <div class="action-item"><div class="action-num">3</div><p><strong>Invest in a prompt quality layer.</strong> Uber's pattern — analyzing prompts before execution — directly reduces failed tasks and builds trust.</p></div>
+
+  <div class="action-item"><div class="action-num">4</div><p><strong>Start measuring business outcomes now.</strong> Before the CFO asks. Instrument from design → experiment in production. Show time compression, not just more PRs.</p></div>
+
+  <div class="action-item"><div class="action-num">5</div><p><strong>Build cost observability from day one.</strong> Trace token costs per team, per project, per migration type. Own this narrative before finance forces it.</p></div>
+
+  <div class="action-item"><div class="action-num">6</div><p><strong>Drive adoption through champions, not mandates.</strong> Find 3-5 power users, document wins, share widely. "Engineers trust other engineers."</p></div>
+
+  <div class="action-item"><div class="action-num">7</div><p><strong>Start evals with 5 golden examples.</strong> Build a simple eval harness, start with 5 correct cases, grow incrementally. Run in CI.</p></div>
+
+  <div class="action-item"><div class="action-num">8</div><p><strong>Consider "one agent with a thousand skills."</strong> Shared framework with pluggable migration skills and a common tool catalog.</p></div>
+
+  <div class="action-item"><div class="action-num">9</div><p><strong>Implement the autonomy slider.</strong> Let teams control trust in AI-generated migrations. Start with suggestions, let them pull toward auto-merge.</p></div>
+
+  <div class="action-item"><div class="action-num">10</div><p><strong>Read the Ramp Inspect open source blueprint</strong> at builders.ramp.com — reference implementation for internal AI developer tools.</p></div>
+</section>
+
+<!-- ═══════════════════════════════════════ QUOTES ═══ -->
+<section class="quote-gallery-section" id="quotes">
+  <h2>Best Quotes Collection</h2>
+
+  <div class="quote-gallery">
+    <blockquote><p>"Coding got solved in six months… that doesn't mean engineering is done. But the best engineers I know are not writing code by hand anymore."</p><span class="attr">— Sualeh Asif, Cursor</span></blockquote>
+
+    <blockquote><p>"Agents are as smart as the context you give them."</p><span class="attr">— Rajeev Rajan, Atlassian</span></blockquote>
+
+    <blockquote><p>"You don't need to build a thousand agents. You want a single agent with a thousand skills."</p><span class="attr">— Nik Koblov, Ramp</span></blockquote>
+
+    <blockquote><p>"The cost of AI is too damn high."</p><span class="attr">— Anshu Chada, Uber</span></blockquote>
+
+    <blockquote><p>"Software is free. Like getting a free puppy. It has to be maintained."</p><span class="attr">— Malte Ubl, Vercel</span></blockquote>
+
+    <blockquote><p>"AI products cannot be one-shotted."</p><span class="attr">— Veeral Patel, Ramp</span></blockquote>
+
+    <blockquote><p>"In the world of agents, you have to be humble. Best practices from summer 2025 mean quite little today."</p><span class="attr">— Malte Ubl, Vercel</span></blockquote>
+
+    <blockquote><p>"You can still build the wrong thing just a lot faster, and you can build bigger messes."</p><span class="attr">— Ian Tracey, Ramp</span></blockquote>
+
+    <blockquote><p>"Coding is fun again. What agents have done is bring us back to the joy of coding."</p><span class="attr">— Thomas Dohmke, ex-GitHub CEO</span></blockquote>
+
+    <blockquote><p>"Every time I think I'm more capable than Codex, I figure out I'm wrong and I just didn't prompt it right."</p><span class="attr">— Unnamed OpenAI researcher, per Tibo Sottiaux</span></blockquote>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <p>Analysis of all publicly available Pragmatic Summit recordings</p>
+  <p style="margin-top:.5rem"><a href="https://pragmaticsummit.com" target="_blank" rel="noopener">pragmaticsummit.com</a></p>
+</footer>
+
+<script>
+// Close mobile TOC when clicking a link
+document.querySelectorAll('.sidebar a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
